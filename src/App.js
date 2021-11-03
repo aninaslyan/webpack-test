@@ -5,7 +5,10 @@ export const App = () => {
 
   return (
     <header>
-      <p>count: {state}</p>
+      <div className="main-container">
+        <p>count: {state}</p>
+      </div>
+      <p>Another p</p>
     </header>
   );
 };
