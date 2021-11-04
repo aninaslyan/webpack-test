@@ -1,14 +1,15 @@
-const path = require("path");
+import * as path from 'path';
+import * as webpack from "webpack";
 
-const HTMLWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+import * as HTMLWebpackPlugin from "html-webpack-plugin";
+import * as MiniCssExtractPlugin from "mini-css-extract-plugin";
 
-module.exports = {
+const config: webpack.Configuration = {
   mode: "development",
 
   context: path.resolve(__dirname, "./src"),
 
-  entry: "./index.js",
+  entry: "./index.tsx",
 
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -32,10 +33,19 @@ module.exports = {
         loader: "babel-loader",
       },
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.s[ac]ss$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
     ],
+  },
+
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
 
   plugins: [
@@ -47,5 +57,7 @@ module.exports = {
     }),
   ],
 
-  devtool: "source-map",
+  devtool: "inline-source-map",
 };
+
+module.exports = config;
